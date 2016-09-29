@@ -11,7 +11,7 @@ double TSorter::Test(const std::vector<int> &input_sequence, const std::vector<i
     double duration = float(clock() - begin) / CLOCKS_PER_SEC;
 
     if (result != correct_answer) {
-        std::cerr << "Test failed!" << std::endl;
+        std::cerr << "Test failed: " << name << std::endl;
         OutputSequence("\tTest sequence   :", input_sequence, std::cerr);
         OutputSequence("\tOutput sequence :", result, std::cerr);
         OutputSequence("\tCorrect answer  :", correct_answer, std::cerr);

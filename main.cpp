@@ -6,6 +6,7 @@
 #include "qsort.h"
 #include "cppsort.h"
 #include "bubblesort.h"
+#include "selectionsort.h"
 
 using std::cout;
 using std::endl;
@@ -49,6 +50,9 @@ int main() {
 
     TBubbleSorter bubbleSorter;
     cout << bubbleSorter.name << " " << bubbleSorter.Test(input, answer) << endl;
+
+    TSelectionSorter selectionSorter;
+    cout << selectionSorter.name << " " << selectionSorter.Test(input, answer) << endl;
 
     return 0;
 }
