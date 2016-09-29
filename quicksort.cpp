@@ -8,13 +8,16 @@ int GetRandomNumber(std::vector<int> &sequence, const size_t l, const size_t r) 
 int partition(std::vector<int> &sequence, const size_t l, const size_t r) {
     int i = l, j = r - 1;
     int x = GetRandomNumber(sequence, l, r);
+    int tmp;
 
     while (i <= j) {
         while (sequence[i] < x) ++i;
         while (sequence[j] > x) --j;
 
         if (i <= j) {
-            std::swap(sequence[i], sequence[j]);
+            tmp = sequence[i];
+            sequence[i] = sequence[j];
+            sequence[j] = tmp;
             ++i;
             --j;
         }
