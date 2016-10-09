@@ -4,7 +4,7 @@
 #include "helpers.h"
 
 double TSorter::Test(const std::vector<int> &input_sequence, const std::vector<int> &correct_answer) {
-    auto sequence = input_sequence;
+    std::vector<int> sequence = input_sequence;
 
     const clock_t begin = clock();
     auto &result = Sort(sequence);

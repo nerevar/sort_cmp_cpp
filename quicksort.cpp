@@ -1,48 +1,42 @@
 #include <iostream>
 #include "quicksort.h"
 
-int GetRandomNumber(std::vector<int> &sequence, const size_t left, const size_t right) {
-    return *(sequence.begin() + left + std::rand() % (right - left));
-}
+int Partition(std::vector<int> &sequence, const int low, const int high) {
+    int left = low;
+    int right = high;
+    int pivot = sequence[low + rand() % (high - low + 1)];
 
-size_t Partition(std::vector<int> &sequence, const size_t left, const size_t right) {
-    size_t leftIter = left, rightIter = right - 1;
-    int middle = GetRandomNumber(sequence, left, right);
-    int swap;
-
-    while (leftIter <= rightIter) {
-        while (sequence[leftIter] < middle) {
-            ++leftIter;
+    while (left <= right) {
+        while (sequence[left] < pivot) {
+            ++left;
         }
-        while (sequence[rightIter] > middle) {
-            --rightIter;
+        while (sequence[right] > pivot) {
+            --right;
         }
 
-        if (leftIter <= rightIter) {
-            swap = sequence[leftIter];
-            sequence[leftIter] = sequence[rightIter];
-            sequence[rightIter] = swap;
-            ++leftIter;
-            --rightIter;
+        if (left <= right) {
+            std::swap(sequence[left], sequence[right]);
+            ++left;
+            --right;
         }
     }
 
-    return leftIter;
+    return left;
 }
 
-void QuickSort(std::vector<int> &sequence, const size_t left, const size_t right) {
-    size_t index = Partition(sequence, left, right);
+void QuickSort(std::vector<int> &sequence, const int low, const int high) {
+    int index = Partition(sequence, low, high);
 
-    if (left < index - 1) {
-        QuickSort(sequence, left, index);
+    if (low < index - 1) {
+        QuickSort(sequence, low, index - 1);
     }
-    if (index < right) {
-        QuickSort(sequence, index, right);
+    if (index < high) {
+        QuickSort(sequence, index, high);
     }
 }
 
 std::vector<int>& TQuickSorter::Sort(std::vector<int> &sequence) {
-    QuickSort(sequence, 0, sequence.size());
+    QuickSort(sequence, 0, sequence.size() - 1);
     return sequence;
 }
 
