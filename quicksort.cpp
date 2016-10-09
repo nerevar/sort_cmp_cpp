@@ -1,39 +1,43 @@
 #include <iostream>
 #include "quicksort.h"
 
-int GetRandomNumber(std::vector<int> &sequence, const size_t l, const size_t r) {
-    return *(sequence.begin() + l + std::rand() % (r - l ));
+int GetRandomNumber(std::vector<int> &sequence, const size_t left, const size_t right) {
+    return *(sequence.begin() + left + std::rand() % (right - left));
 }
 
-int partition(std::vector<int> &sequence, const size_t l, const size_t r) {
-    int i = l, j = r - 1;
-    int x = GetRandomNumber(sequence, l, r);
-    int tmp;
+size_t Partition(std::vector<int> &sequence, const size_t left, const size_t right) {
+    size_t leftIter = left, rightIter = right - 1;
+    int middle = GetRandomNumber(sequence, left, right);
+    int swap;
 
-    while (i <= j) {
-        while (sequence[i] < x) ++i;
-        while (sequence[j] > x) --j;
+    while (leftIter <= rightIter) {
+        while (sequence[leftIter] < middle) {
+            ++leftIter;
+        }
+        while (sequence[rightIter] > middle) {
+            --rightIter;
+        }
 
-        if (i <= j) {
-            tmp = sequence[i];
-            sequence[i] = sequence[j];
-            sequence[j] = tmp;
-            ++i;
-            --j;
+        if (leftIter <= rightIter) {
+            swap = sequence[leftIter];
+            sequence[leftIter] = sequence[rightIter];
+            sequence[rightIter] = swap;
+            ++leftIter;
+            --rightIter;
         }
     }
 
-    return i;
+    return leftIter;
 }
 
-void QuickSort(std::vector<int> &sequence, const size_t l, const size_t r) {
-    int index = partition(sequence, l, r);
+void QuickSort(std::vector<int> &sequence, const size_t left, const size_t right) {
+    size_t index = Partition(sequence, left, right);
 
-    if (l < index - 1) {
-        QuickSort(sequence, l, index);
+    if (left < index - 1) {
+        QuickSort(sequence, left, index);
     }
-    if (index < r) {
-        QuickSort(sequence, index, r);
+    if (index < right) {
+        QuickSort(sequence, index, right);
     }
 }
 

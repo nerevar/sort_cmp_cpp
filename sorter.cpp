@@ -18,7 +18,7 @@ double TSorter::Test(const std::vector<int> &input_sequence, const std::vector<i
         //throw std::runtime_error("Test failed");
         return -1;
     } else {
-        //std::cerr << "Test passed" << std::endl;
+        std::cerr << "Test passed. Len: " << input_sequence.size() << std::endl;
         return duration;
     }
 
