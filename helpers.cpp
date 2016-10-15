@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include "helpers.h"
 
 void OutputSequence(const std::string name, const std::vector<int> &sequence, std::ostream &out) {
