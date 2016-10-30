@@ -1,21 +1,24 @@
 #include <iostream>
+#include <random>
+#include "helpers.h"
 #include "quicksort.h"
 
-int Partition(std::vector<int> &sequence, const int low, const int high) {
-    int left = low;
-    int right = high;
-    int pivot = sequence[low + rand() % (high - low + 1)];
+template <class Iterator, class RandomGenerator>
+Iterator Partition(Iterator first, Iterator last, RandomGenerator& generator) {
+    Iterator left = first;
+    Iterator right = last;
+    int pivot = *(first + generator() % (last - first + 1));
 
     while (left <= right) {
-        while (sequence[left] < pivot) {
+        while (*left < pivot) {
             ++left;
         }
-        while (sequence[right] > pivot) {
+        while (*right > pivot) {
             --right;
         }
 
         if (left <= right) {
-            std::swap(sequence[left], sequence[right]);
+            std::swap(*left, *right);
             ++left;
             --right;
         }
@@ -24,19 +27,24 @@ int Partition(std::vector<int> &sequence, const int low, const int high) {
     return left;
 }
 
-void QuickSort(std::vector<int> &sequence, const int low, const int high) {
-    int index = Partition(sequence, low, high);
+template <class Iterator, class RandomGenerator>
+void QuickSort(Iterator first, Iterator last, RandomGenerator& generator) {
+    Iterator index = Partition(first, last, generator);
 
-    if (low < index - 1) {
-        QuickSort(sequence, low, index - 1);
+    if (first < index - 1) {
+        QuickSort(first, index - 1, generator);
     }
-    if (index < high) {
-        QuickSort(sequence, index, high);
+    if (index < last) {
+        QuickSort(index, last, generator);
     }
+
 }
 
 std::vector<int>& TQuickSorter::Sort(std::vector<int> &sequence) {
-    QuickSort(sequence, 0, sequence.size() - 1);
+    std::mt19937 gen;
+    gen.seed(SEED);
+
+    QuickSort(sequence.begin(), sequence.end() - 1, gen);
     return sequence;
 }
 
